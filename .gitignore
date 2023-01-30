@@ -1,6 +1,3 @@
-### Custom ###
-.xcuserstate
-
 ### macOS ###
 # General
 .DS_Store
@@ -71,5 +68,3 @@ Derived/
 
 ### Tuist managed dependencies ###
 Tuist/Dependencies
-
-

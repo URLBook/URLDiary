@@ -1,2 +1,0 @@
-# URLDiary
-URLDiary
