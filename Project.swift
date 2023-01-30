@@ -1,6 +1,5 @@
 import ProjectDescription
 import ProjectDescriptionHelpers
-import MyPlugin
 
 /*
                 +-------------+
@@ -99,9 +98,8 @@ class BaseProjectFactory: ProjectFactory {
                 bundleId: "so.notion.\(projectName)",
                 deploymentTarget: deploymentTarget,
                 infoPlist: .extendingDefault(with: infoPlist),
-                sources: ["\(projectName)/Sources/**"],
-                resources: "\(projectName)/Resources/**",
-                entitlements: "\(projectName).entitlements",
+                sources: ["Targets/\(projectName)/Sources/**"],
+                resources: "Targets/\(projectName)/Resources/**",
                 scripts: [.pre(path: "Scripts/SwiftLintRunScript.sh", arguments: [], name: "SwiftLint")],
                 dependencies: dependencies
             )
