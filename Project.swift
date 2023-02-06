@@ -30,6 +30,8 @@ protocol ProjectFactory {
 // MARK: - Base Project Factory
 class BaseProjectFactory: ProjectFactory {
     let projectName: String = "URLDiary"
+    let projectKit: String = "URLDiaryKit"
+    let projectUI: String = "URLDiaryUI"
     
     let deploymentTarget: ProjectDescription.DeploymentTarget = .iOS(targetVersion: "16.0", devices: [.iphone])
     
@@ -101,6 +103,26 @@ class BaseProjectFactory: ProjectFactory {
                 sources: ["Targets/\(projectName)/Sources/**"],
                 resources: "Targets/\(projectName)/Resources/**",
                 scripts: [.pre(path: "Scripts/SwiftLintRunScript.sh", arguments: [], name: "SwiftLint")],
+                dependencies: dependencies + [.target(name: "URLDiaryKit"), .target(name: "URLDiaryUI")]
+            ),
+            Target(
+                name: projectKit,
+                platform: .iOS,
+                product: .framework,
+                bundleId: "so.notion.\(projectName).\(projectKit)",
+                deploymentTarget: deploymentTarget,
+                infoPlist: .default,
+                sources: ["Targets/\(projectKit)/Sources/**"],
+                dependencies: dependencies
+            ),
+            Target(
+                name: projectUI,
+                platform: .iOS,
+                product: .framework,
+                bundleId: "so.notion.\(projectName).\(projectUI)",
+                deploymentTarget: deploymentTarget,
+                infoPlist: .default,
+                sources: ["Targets/\(projectUI)/Sources/**"],
                 dependencies: dependencies
             )
         ]
