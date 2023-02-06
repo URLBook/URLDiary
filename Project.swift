@@ -2,19 +2,19 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 /*
-                +-------------+
-                |             |
-                |     App     | Contains URLDiary App target and URLDiary unit-test target
-                |             |
-         +------+-------------+-------+
-         |         depends on         |
-         |                            |
+ +-------------+
+ |             |
+ |     App     | Contains URLDiary App target and URLDiary unit-test target
+ |             |
+ +------+-------------+-------+
+ |         depends on         |
+ |                            |
  +----v-----+                   +-----v-----+
  |          |                   |           |
  |   Kit    |                   |     UI    |   Two independent frameworks to share code and start modularising your app
  |          |                   |           |
  +----------+                   +-----------+
-
+ 
  */
 
 // MARK: - Project Factory
@@ -50,7 +50,6 @@ class BaseProjectFactory: ProjectFactory {
     ]
     
     let infoPlist: [String: InfoPlist.Value] = [
-        "CFBundleShortVersionString": "1.0.1",
         "CFBundleVersion": "1",
         "UILaunchStoryboardName": "LaunchScreen",
         "UIApplicationSceneManifest": [
@@ -67,7 +66,7 @@ class BaseProjectFactory: ProjectFactory {
     ]
     
     let baseSettings: [String: SettingValue] = [
-      "OTHER_LDFLAGS": "-ObjC",
+        "OTHER_LDFLAGS": "-ObjC",
     ]
     
     let releaseSetting: [String: SettingValue] = [:]
@@ -78,17 +77,17 @@ class BaseProjectFactory: ProjectFactory {
         return Settings.settings(
             base: baseSettings,
             configurations: [
-              .release(
-                name: "Release",
-                settings: releaseSetting
-              ),
-              .debug(
-                name: "Debug",
-                settings: debugSetting
-              )
+                .release(
+                    name: "Release",
+                    settings: releaseSetting
+                ),
+                .debug(
+                    name: "Debug",
+                    settings: debugSetting
+                )
             ],
             defaultSettings: .recommended
-          )
+        )
     }
     
     func generateTarget() -> [Target] {
@@ -103,7 +102,8 @@ class BaseProjectFactory: ProjectFactory {
                 sources: ["Targets/\(projectName)/Sources/**"],
                 resources: "Targets/\(projectName)/Resources/**",
                 scripts: [.pre(path: "Scripts/SwiftLintRunScript.sh", arguments: [], name: "SwiftLint")],
-                dependencies: dependencies + [.target(name: "URLDiaryKit"), .target(name: "URLDiaryUI")]
+                dependencies: dependencies + [.target(name: "URLDiaryKit"), .target(name: "URLDiaryUI")],
+                coreDataModels: [CoreDataModel("Targets/URLDiary/Resources/URLModel.xcdatamodeld")]
             ),
             Target(
                 name: projectKit,
@@ -113,7 +113,10 @@ class BaseProjectFactory: ProjectFactory {
                 deploymentTarget: deploymentTarget,
                 infoPlist: .default,
                 sources: ["Targets/\(projectKit)/Sources/**"],
-                dependencies: dependencies
+                dependencies:  [
+                    .external(name: "RxSwift"),
+                    .external(name: "Alamofire")
+                ]
             ),
             Target(
                 name: projectUI,
@@ -123,7 +126,10 @@ class BaseProjectFactory: ProjectFactory {
                 deploymentTarget: deploymentTarget,
                 infoPlist: .default,
                 sources: ["Targets/\(projectUI)/Sources/**"],
-                dependencies: dependencies
+                dependencies:  [
+                    .external(name: "RxSwift"),
+                    .external(name: "SnapKit")
+                ]
             )
         ]
     }
