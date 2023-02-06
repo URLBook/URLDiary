@@ -7,6 +7,7 @@
 import ProjectDescription
 
 let spm = SwiftPackageManagerDependencies([
+    .remote(url: "https://github.com/ReSwift/ReSwift.git", requirement: .upToNextMajor(from: "6.0.0")),
     .remote(url: "https://github.com/ReactiveX/RxSwift", requirement: .upToNextMajor(from: "6.5.0")),
     .remote(url: "https://github.com/RxSwiftCommunity/RxKeyboard", requirement: .upToNextMajor(from: "2.0.0")),
     .remote(url: "https://github.com/firebase/firebase-ios-sdk", requirement: .upToNextMajor(from: "8.10.0")),

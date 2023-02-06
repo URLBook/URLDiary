@@ -46,7 +46,8 @@ class BaseProjectFactory: ProjectFactory {
         .external(name: "FirebaseFirestore"),
         .external(name: "FirebaseStorage"),
         .external(name: "FirebaseMessaging"),
-        .external(name: "Swinject")
+        .external(name: "Swinject"),
+        .external(name: "ReSwift")
     ]
     
     let infoPlist: [String: InfoPlist.Value] = [
